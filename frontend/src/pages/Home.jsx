@@ -21,12 +21,14 @@ function Home() {
   }, [query]);
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Movies</h1>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {movies.map((movie) => (
-          <MovieCard key={movie._id} movie={movie} />
-        ))}
+    <div className="min-h-screen bg-gray-50 py-8">
+      <h1 className="text-3xl font-extrabold mb-8 text-gray-800 text-center">🎬 Explore Movies</h1>
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 container mx-auto">
+        {movies.length > 0 ? (
+          movies.map((movie) => <MovieCard key={movie._id} movie={movie} />)
+        ) : (
+          <p className="col-span-full text-center text-gray-600">No movies found.</p>
+        )}
       </div>
     </div>
   );
