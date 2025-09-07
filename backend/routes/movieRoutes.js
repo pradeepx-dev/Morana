@@ -23,6 +23,30 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// GET all movies (with search)
+router.get("/", async (req, res) => {
+  try {
+    const { search } = req.query;
+    let query = {};
+
+    if (search) {
+      query = {
+        $or: [
+          { title: { $regex: search, $options: "i" } },
+          { director: { $regex: search, $options: "i" } },
+          { genre: { $regex: search, $options: "i" } },
+          { cast: { $regex: search, $options: "i" } },
+        ],
+      };
+    }
+
+    const movies = await Movie.find(query);
+    res.json(movies);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ADD new movie
 router.post("/", async (req, res) => {
   try {
