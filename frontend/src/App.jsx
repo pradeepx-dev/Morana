@@ -1,20 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import MovieDetail from "./pages/MovieDetail";
-import Header from "./components/Header";
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Header from './components/common/Header'
+import Footer from './components/common/Footer'
+import Home from './pages/Home'
+import MovieDetails from './pages/MovieDetails'
+import AddMovie from './pages/AddMovie'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
-    <Router>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
       <Header />
-      <div className="container mx-auto p-4">
+      <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/movie/:id" element={<MovieDetail />} />
+          <Route path="/movie/:id" element={<MovieDetails />} />
+          <Route path="/add-movie" element={<AddMovie />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      </div>
-    </Router>
-  );
+      </main>
+      <Footer />
+    </div>
+  )
 }
 
-export default App;
+export default App
