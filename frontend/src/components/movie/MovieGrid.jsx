@@ -5,13 +5,15 @@ import { Grid, List } from 'lucide-react'
 const MovieGrid = ({ 
   movies, 
   onMovieClick, 
+  onMovieDelete,
   viewMode = 'grid',
   onViewModeChange,
-  loading = false 
+  loading = false,
+  showActions = true
 }) => {
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
         {Array.from({ length: 8 }, (_, index) => (
           <MovieCardSkeleton key={index} />
         ))}
@@ -64,7 +66,7 @@ const MovieGrid = ({
       {/* Movies Grid/List */}
       <div className={`${
         viewMode === 'grid' 
-          ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' 
+          ? 'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6' 
           : 'space-y-4'
       }`}>
         {movies.map(movie => (
@@ -73,12 +75,16 @@ const MovieGrid = ({
               key={movie._id} 
               movie={movie} 
               onClick={onMovieClick}
+              onDelete={onMovieDelete}
+              showActions={showActions}
             />
           ) : (
             <MovieCardCompact 
               key={movie._id} 
               movie={movie} 
               onClick={onMovieClick}
+              onDelete={onMovieDelete}
+              showActions={showActions}
             />
           )
         ))}
@@ -90,15 +96,15 @@ const MovieGrid = ({
 // Skeleton loader for movie cards
 const MovieCardSkeleton = () => (
   <div className="bg-gray-800 rounded-xl overflow-hidden shadow-lg animate-pulse">
-    <div className="w-full h-64 sm:h-80 bg-gray-700"></div>
-    <div className="p-4 space-y-3">
-      <div className="h-6 bg-gray-700 rounded w-3/4"></div>
+    <div className="w-full h-48 sm:h-64 lg:h-80 bg-gray-700"></div>
+    <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
+      <div className="h-4 sm:h-6 bg-gray-700 rounded w-3/4"></div>
       <div className="flex space-x-2">
-        <div className="h-6 bg-gray-700 rounded w-16"></div>
-        <div className="h-6 bg-gray-700 rounded w-20"></div>
+        <div className="h-4 sm:h-6 bg-gray-700 rounded w-12 sm:w-16"></div>
+        <div className="h-4 sm:h-6 bg-gray-700 rounded w-16 sm:w-20"></div>
       </div>
-      <div className="h-4 bg-gray-700 rounded w-1/2"></div>
-      <div className="h-4 bg-gray-700 rounded w-full"></div>
+      <div className="h-3 sm:h-4 bg-gray-700 rounded w-1/2"></div>
+      <div className="h-3 sm:h-4 bg-gray-700 rounded w-full"></div>
     </div>
   </div>
 )
@@ -124,18 +130,26 @@ const EmptyState = () => (
 )
 
 // Featured movies section
-export const FeaturedMovies = ({ movies, onMovieClick, title = "Featured Movies" }) => {
+export const FeaturedMovies = ({ 
+  movies, 
+  onMovieClick, 
+  onMovieDelete, 
+  title = "Featured Movies", 
+  showActions = true 
+}) => {
   if (!movies || movies.length === 0) return null
 
   return (
     <section className="mb-12">
       <h2 className="text-white text-2xl font-bold mb-6">{title}</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
         {movies.slice(0, 4).map(movie => (
           <MovieCard 
             key={movie._id} 
             movie={movie} 
             onClick={onMovieClick}
+            onDelete={onMovieDelete}
+            showActions={showActions}
           />
         ))}
       </div>
@@ -144,7 +158,12 @@ export const FeaturedMovies = ({ movies, onMovieClick, title = "Featured Movies"
 }
 
 // Trending movies carousel
-export const TrendingMovies = ({ movies, onMovieClick }) => {
+export const TrendingMovies = ({ 
+  movies, 
+  onMovieClick, 
+  onMovieDelete, 
+  showActions = true 
+}) => {
   if (!movies || movies.length === 0) return null
 
   return (
@@ -152,13 +171,27 @@ export const TrendingMovies = ({ movies, onMovieClick }) => {
       <h2 className="text-white text-2xl font-bold mb-6">Trending Now</h2>
       <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
         {movies.map(movie => (
-          <div key={movie._id} className="flex-shrink-0 w-64">
-            <MovieCard movie={movie} onClick={onMovieClick} />
+          <div key={movie._id} className="flex-shrink-0 w-40 sm:w-64">
+            <MovieCard 
+              movie={movie} 
+              onClick={onMovieClick}
+              onDelete={onMovieDelete}
+              showActions={showActions}
+            />
           </div>
         ))}
       </div>
     </section>
   )
 }
+
+// Grid skeleton for multiple movie cards
+export const MovieGridSkeleton = ({ count = 8 }) => (
+  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+    {Array.from({ length: count }, (_, index) => (
+      <MovieCardSkeleton key={index} />
+    ))}
+  </div>
+)
 
 export default MovieGrid

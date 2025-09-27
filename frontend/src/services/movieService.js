@@ -21,7 +21,7 @@ export const movieService = {
     }
   },
 
-  // Add new movie (admin function)
+  // Add new movie
   addMovie: async (movieData) => {
     try {
       const response = await api.post('/movies', movieData)
@@ -31,7 +31,7 @@ export const movieService = {
     }
   },
 
-  // Update movie (admin function)
+  // Update movie
   updateMovie: async (id, movieData) => {
     try {
       const response = await api.put(`/movies/${id}`, movieData)
@@ -41,7 +41,7 @@ export const movieService = {
     }
   },
 
-  // Delete movie (admin function)
+  // Delete movie
   deleteMovie: async (id) => {
     try {
       const response = await api.delete(`/movies/${id}`)

@@ -5,6 +5,7 @@ import Footer from './components/common/Footer'
 import Home from './pages/Home'
 import MovieDetails from './pages/MovieDetails'
 import AddMovie from './pages/AddMovie'
+import EditMovie from './pages/EditMovie'
 import NotFound from './pages/NotFound'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/movie/:id" element={<MovieDetails />} />
           <Route path="/add-movie" element={<AddMovie />} />
+          <Route path="/edit-movie/:id" element={<EditMovie />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
